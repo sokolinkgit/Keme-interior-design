@@ -1,5 +1,5 @@
 /* ==========================================================================
-   REDEFINE INTERIORS & MATERIALS SUPPLY — main.js
+   KEME INTERIOR DESIGN — main.js
    Vanilla JavaScript only. No frameworks, no dependencies.
    --------------------------------------------------------------------------
    Sections
@@ -12,11 +12,9 @@
    G. Quotation list (localStorage)
    H. FAQ (+ collapsible Q&A block), edge-scroll → Home navigation, forms,
       counters & reveal animations
-   I. Public API (window.Site) — the hooks js/content.js and js/admin.js use
+   I. Public API (window.Site) — rendering helpers for this standalone site
    --------------------------------------------------------------------------
-   Content comes from Supabase when it is reachable (js/content.js) and from
-   js/data.js when it is not; this file only ever renders whatever is in the
-   arrays, so the two are interchangeable.
+   This standalone site renders directly from the arrays in js/data.js.
    ========================================================================== */
 (function () {
   'use strict';
@@ -36,7 +34,6 @@
   const ICONS = {
     whatsapp: SVG('<path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.19.05-.37-.03-.52-.07-.15-.66-1.61-.91-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.29.18-1.41-.08-.12-.28-.2-.58-.35M12.05 21.8a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L0 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.49-8.4"/>', true),
     phone: SVG('<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>'),
-    mail: SVG('<rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m22 7-10 5.2L2 7"/>'),
     pin: SVG('<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>'),
     clock: SVG('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>'),
     star: SVG('<path d="M12 2.6l2.95 5.98 6.6.96-4.78 4.65 1.13 6.57L12 17.66l-5.9 3.1 1.13-6.57L2.45 9.54l6.6-.96z"/>', true),
@@ -86,7 +83,8 @@
     'aluminium-works': 'window',
     'gypsum-works': 'layers',
     'shop-renovation': 'shop',
-    fittings: 'wrench'
+    fittings: 'wrench',
+    'interior-painting': 'palette'
   };
 
   /* --- responsive images ------------------------------------------------
@@ -207,25 +205,9 @@
     if (!win) window.location.href = waLink(message, number);
   };
 
-  /* --- E-mail -------------------------------------------------------------
-     EVERY e-mail button or link on the site — footer, contact cards, links
-     inside sentences, wherever it may be — opens with a subject and a body
-     already written out. The plain mailto: href in the HTML stays as the
-     no-JavaScript fallback; on load, main.js rewrites each a[data-email]
-     with the prefilled version. A link may override the subject/body with
-     data-email-subject / data-email-body.                          */
-  const mailTo = (subject, body) =>
-    'mailto:' + BUSINESS.email + '?subject=' + encodeURIComponent(subject || '') +
-    '&body=' + encodeURIComponent(body || '');
-  const mailSubjectFor = (a) => a.dataset.emailSubject || 'Quotation request — from the website';
-  const mailBodyFor = (a) => a.dataset.emailBody ||
-    'Hello ' + BUSINESS.name + ' \uD83D\uDC4B\n\n' +
-    'I found you on your website and I would like to request a quotation.\n\n' +
-    'Name: ______\n' +
-    'Phone: ______\n' +
-    'Project location: ______\n\n' +
-    'Details: ______\n\n' +
-    'Please send me a written quotation. Thank you!';
+  /* --- WhatsApp-only contact --------------------------------------------
+     Every quotation request on this website is sent to +254 758 688835
+     on WhatsApp.                                                           */
 
   /* ======================================================================
      B. SITE CHROME — floating actions, drawer shell, toasts
@@ -264,7 +246,7 @@
       '  <span class="float-wa__label"><strong>Chat on WhatsApp</strong><small>Reply in minutes</small></span>',
       '</a>',
 
-      '<a class="float-call" href="tel:' + BUSINESS.phonePrimaryDial + '" aria-label="Call Redefine Interiors now">',
+      '<a class="float-call" href="tel:' + BUSINESS.phonePrimaryDial + '" aria-label="Call Keme Interior Design now">',
       '  <span class="float-call__icon">' + ICONS.phone + '</span>',
       '  <span class="float-call__label"><strong>Call ' + BUSINESS.phonePrimary + '</strong></span>',
       '</a>',
@@ -403,11 +385,6 @@
     });
     $$('[data-tel]').forEach((el) => { el.href = 'tel:' + el.dataset.tel; });
 
-    /* every e-mail link always opens with a prefilled subject + body */
-    $$('a[data-email]').forEach((el) => {
-      el.href = mailTo(mailSubjectFor(el), mailBodyFor(el));
-    });
-
     const year = $('#year');
     if (year) year.textContent = new Date().getFullYear();
   }
@@ -427,7 +404,7 @@
 
   function heroSlideMarkup(d, i) {
     const hidden = d.active === false;
-    const alt = d.imageAlt || ((d.title || 'Interior design') + (d.category ? ' — ' + d.category : '') + ' by Redefine Interiors');
+    const alt = d.imageAlt || ((d.title || 'Interior design') + (d.category ? ' — ' + d.category : '') + ' by Keme Interior Design');
     return [
       '<div class="hero__slide' + (i === 0 ? ' is-active' : '') + '"' +
         ' data-cms="design" data-cms-id="' + escapeHtml(String(d.uuid || d.id || i)) + '" data-cms-slide="1"' +
@@ -616,7 +593,7 @@
         '  <p class="review-card__text">' + escapeHtml(r.text) + '</p>',
         '  <div class="review-card__foot">',
         '    <span class="review-card__service">' + ICONS.tag + escapeHtml(r.service) + '</span>',
-        '    <span class="review-card__verified">' + ICONS.checkCircle + 'Verified client</span>',
+        '    <span class="review-card__verified">' + ICONS.checkCircle + 'Verified Keme Interior Design client</span>',
         '  </div>',
         '</article>'
       ].join('');
@@ -716,7 +693,7 @@
      WhatsApp quotation button — no badges, no description, no cart, no note field. */
   function designCard(d) {
     const name = String(d.title || '').trim();
-    const alt = d.imageAlt || ((name || 'Interior design') + (d.category ? ' — ' + d.category : '') + ' by Redefine Interiors');
+    const alt = d.imageAlt || ((name || 'Interior design') + (d.category ? ' — ' + d.category : '') + ' by Keme Interior Design');
     return [
       '<article class="card reveal' + (d.active === false ? ' is-draft' : '') + (name ? '' : ' card--nameless') + '" data-cat="' + escapeHtml(d.category || '') + '"' + cmsAttrs('design', d) + '>',
       '  <div class="card__media">',
@@ -746,7 +723,7 @@
   function materialCard(m) {
     const badge = m.badge ? '<span class="badge badge--ink">' + escapeHtml(m.badge) + '</span>' : '';
     const name = String(m.name || '').trim();
-    const alt = m.imageAlt || ((name || 'Building material') + ' supplied by Redefine Interiors Kenya');
+    const alt = m.imageAlt || ((name || 'Building material') + ' supplied by Keme Interior Design Kenya');
     const media = m.image
       ? '  <div class="card__media card__media--photo">' +
         '    ' + responsiveImg(m.image, alt, CARD_SIZES, { xs: m.image480, sm: m.image760 }) +
@@ -779,7 +756,7 @@
     const icon = ICONS[iconFor(s)] || ICONS.spark;
     const media = s.image
       ? '<div class="service-card__media">' +
-          responsiveImg(s.image, s.imageAlt || (s.title + ' by Redefine Interiors — ' + s.text), CARD_SIZES, { xs: s.image480, sm: s.image760 }) +
+          responsiveImg(s.image, s.imageAlt || (s.title + ' by Keme Interior Design — ' + s.text), CARD_SIZES, { xs: s.image480, sm: s.image760 }) +
           '<span class="service-card__cat">' + icon + escapeHtml(s.title) + '</span></div>'
       : '';
     return [
@@ -905,7 +882,7 @@
     renderFilters();
   }
 
-  /* ---- "Why Redefine Interiors & Materials Supply" photo ---------------
+  /* ---- "Why Keme Interior Design" photo ---------------
      The split section on the home page (under the "Book a site visit"
      button) shows ONE photo from the Designs Gallery. Which one is a choice
      the administrator makes with the pencil on that photo (admin overlay →
@@ -953,7 +930,7 @@
     frame.classList.remove('media-frame--empty');
     frame.dataset.whyCurrent = String(d.uuid || d.id || '');
     const alt = d.imageAlt || ((d.title || 'Interior design') +
-      (d.category ? ' — ' + d.category : '') + ' by Redefine Interiors');
+      (d.category ? ' — ' + d.category : '') + ' by Keme Interior Design');
     const html = responsiveImg(d.image, alt, '(max-width: 760px) 100vw, (max-width: 1024px) 46vw',
       { xs: d.image480, sm: d.image760, full: true });
     if (img) img.outerHTML = html; else frame.insertAdjacentHTML('afterbegin', html);
@@ -1283,7 +1260,7 @@
   /* ======================================================================
      G. QUOTATION LIST (persisted in localStorage)
      ====================================================================== */
-  const STORE_KEY = 'redefine_quote_v1';
+  const STORE_KEY = 'keme_quote_v1';
   let quote = [];
 
   function loadQuote() {
@@ -1600,9 +1577,7 @@
     arm();
   }
 
-  /* ---- the quotation request text (WhatsApp message / e-mail body) ---- */
-  const QUOTE_EMAIL = BUSINESS.email;
-
+  /* ---- the quotation request text (WhatsApp message) ------------------ */
   function quoteText(get) {
     return [
       'Hello ' + BUSINESS.name + ' 👋',
@@ -1622,16 +1597,9 @@
     ].filter((line) => line !== '').join('\n');
   }
 
-  /* opens the visitor's e-mail app with everything filled in: To = our
-     address, a clear subject and the same text the WhatsApp route sends */
-  const mailtoLink = (subject, body) =>
-    'mailto:' + QUOTE_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body.replace(/\*/g, ''));
-  const openMail = (subject, body) => { window.location.href = mailtoLink(subject, body); };
-
   /* ---- the home page quotation panel --------------------------------------
-     "Request a quotation" in the hero does not leave the page: it expands a
-     compact form (data-quote-panel) just below the hero, and the panel folds
-     away again once the request has been sent.                             */
+     "Request a quotation" in the hero expands a compact form just below the
+     hero; the panel folds away again once the WhatsApp request is sent.      */
   function setQuotePanel(open, focus) {
     const panel = $('[data-quote-panel]');
     if (!panel) return;
@@ -1642,7 +1610,6 @@
       const y = panel.getBoundingClientRect().top + window.pageYOffset - 90;
       window.scrollTo({ top: y, behavior: 'smooth' });
       if (focus) {
-        /* focus the first field the visitor can actually type in */
         const inputs = $$('input, textarea', panel);
         const first = inputs.find((el) => !el.readOnly) || inputs[0];
         if (first) setTimeout(() => first.focus({ preventScroll: true }), 450);
@@ -1664,16 +1631,11 @@
     window.addEventListener('hashchange', () => { if (window.location.hash === '#quote') setQuotePanel(true, true); });
   }
 
+  /* ---- every quotation form goes through WhatsApp only ------------------ */
   function initForms() {
     $$('[data-quote-form]').forEach((form) => {
-      /* which button sent the form: WhatsApp (default) or e-mail */
-      let via = 'wa';
-      $$('[data-send]', form).forEach((b) => b.addEventListener('click', () => { via = b.dataset.send || 'wa'; }));
-
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const channel = (e.submitter && e.submitter.dataset && e.submitter.dataset.send) || via || 'wa';
-        via = 'wa';
         let valid = true;
         const required = $$('[required]', form);
 
@@ -1704,20 +1666,13 @@
         const message = quoteText(get);
         const first = get('name').split(' ')[0];
 
-        if (channel === 'email') {
-          openMail('Quotation request — ' + get('name') + (get('location') ? ' (' + get('location') + ')' : ''), message);
-          toast('Opening your e-mail app with the request addressed to ' + QUOTE_EMAIL, 'ok');
-        } else {
-          openWa(message);
-          toast('Opening WhatsApp with your request…', 'wa');
-        }
+        openWa(message);
+        toast('Opening WhatsApp with your request…', 'wa');
 
         const note = $('[data-form-note]', form);
         if (note) {
           note.hidden = false;
-          note.textContent = 'Thank you, ' + first + '! ' + (channel === 'email'
-            ? 'Your e-mail app should now be open with the request ready to send.'
-            : 'WhatsApp should now be open with your request ready to send.');
+          note.textContent = 'Thank you, ' + first + '! WhatsApp should now be open with your request ready to send.';
         }
         form.reset();
 
@@ -1817,10 +1772,8 @@
      BOOT
      ====================================================================== */
   /* ======================================================================
-     I. PUBLIC API — used by js/content.js (Supabase) and js/admin.js (ghost
-        mode). The page renders instantly from js/data.js and is then topped
-        up with whatever the database says, so a slow or offline connection
-        never leaves the site blank.
+     I. PUBLIC API — the page renders directly from js/data.js and exposes a
+        small set of rendering helpers for the static site.
      ====================================================================== */
   let booted = false;
   let pendingRefresh = false;
