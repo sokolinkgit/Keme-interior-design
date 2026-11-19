@@ -1,32 +1,139 @@
 /* ==========================================================================
-   REDEFINE INTERIORS & MATERIALS SUPPLY — CONTENT DATA
+   KEME INTERIOR DESIGN — CONTENT DATA
    Pure data layer. No prices are published on the site — clients receive a
    written quotation after a site visit.
    ========================================================================== */
 
 const BUSINESS = {
-  name: 'Redefine Interiors & Materials Supply',
-  shortName: 'Redefine Interiors',
-  tagline: 'Interiors, fittings & materials — done right.',
-  phonePrimary: '0703 142 874',
-  phonePrimaryDial: '+254703142874',
-  waPrimary: '254703142874',
-  phoneSecondary: '0703 142 874',
-  waSecondary: '254703142874',
-  email: 'info@redefineinteriorsandmaterialssupply.co.ke',
-  website: 'https://www.redefineinteriorsandmaterialssupply.co.ke/',
+  name: 'Keme Interior Design',
+  shortName: 'Keme Interior Design',
+  tagline: 'Transforming Spaces. Elevating Living',
+  phonePrimary: '+254 758 688835',
+  phonePrimaryDial: '+254758688835',
+  waPrimary: '254758688835',
+  phoneSecondary: '+254 758 688835',
+  waSecondary: '254758688835',
+  website: '/',
   hours: 'Mon – Sat: 8:00am – 6:00pm',
   hoursSunday: 'Sunday: By appointment',
   areas: 'All parts of Kenya'
 };
 
 /* ---------------------------------------------------------------- DESIGN WORK
-   Every design photo lives in Supabase (the `designs` table + the site-media
-   bucket) and is uploaded from the admin overlay. Nothing is shipped here on
-   purpose: the site never shows a gallery picture that is not in the database,
-   so the built-in list is empty and the Designs Gallery, the homepage
-   slideshow and the "Why us" photo all come from Supabase only.               */
-const DESIGNS = [];
+   Built-in portfolio for this standalone Keme Interior Design website. Every
+   full-size photograph has matching 480px and 760px cuts in assets/img/sm/.   */
+const DESIGNS = [
+  {
+    id: 'd01', code: 'd01', title: 'Contemporary L-Shape Kitchen',
+    category: 'Kitchen Cabinets', image: 'assets/img/hero-1-kitchen.jpg',
+    image480: 'assets/img/sm/hero-1-kitchen-480.jpg', image760: 'assets/img/sm/hero-1-kitchen-760.jpg',
+    imageAlt: 'Contemporary fitted kitchen by Keme Interior Design',
+    badge: 'Featured', time: '2 – 4 weeks', unit: 'Full kitchen fit-out',
+    summary: 'A clean, practical kitchen layout with generous worktop space and tailored cabinetry.',
+    features: ['Bespoke carcasses', 'Soft-close hardware', 'Quartz worktop'], materials: ['MDF', 'Quartz', 'Hardware'],
+    position: 1, active: true, featured: true, featuredPosition: 1
+  },
+  {
+    id: 'd02', code: 'd02', title: 'Floor-to-Ceiling Wardrobe',
+    category: 'Wardrobes', image: 'assets/img/hero-2-wardrobe.jpg',
+    image480: 'assets/img/sm/hero-2-wardrobe-480.jpg', image760: 'assets/img/sm/hero-2-wardrobe-760.jpg',
+    imageAlt: 'Floor-to-ceiling fitted wardrobe by Keme Interior Design',
+    badge: 'Featured', time: '7 – 14 days', unit: 'Bedroom storage',
+    summary: 'A made-to-measure wardrobe that closes the dust gap and uses every centimetre.',
+    features: ['Full-height doors', 'Drawer and shoe zones', 'Interior lighting'], materials: ['Melamine', 'Mirror', 'LED'],
+    position: 2, active: true, featured: true, featuredPosition: 2
+  },
+  {
+    id: 'd03', code: 'd03', title: 'Gypsum Living Room Ceiling',
+    category: 'Gypsum Works', image: 'assets/img/hero-3-living-gypsum.jpg',
+    image480: 'assets/img/sm/hero-3-living-gypsum-480.jpg', image760: 'assets/img/sm/hero-3-living-gypsum-760.jpg',
+    imageAlt: 'Gypsum ceiling with concealed cove lighting by Keme Interior Design',
+    badge: 'Featured', time: '3 – 9 days', unit: 'Ceiling and cove lighting',
+    summary: 'A seamless dropped ceiling with warm concealed lighting and crisp shadow lines.',
+    features: ['Cove lighting', 'Taped joints', 'Recessed spots'], materials: ['Gypsum board', 'LED strip'],
+    position: 3, active: true, featured: true, featuredPosition: 3
+  },
+  {
+    id: 'd04', code: 'd04', title: 'Boutique Shop Renovation',
+    category: 'Shop Renovation', image: 'assets/img/hero-4-shop.jpg',
+    image480: 'assets/img/sm/hero-4-shop-480.jpg', image760: 'assets/img/sm/hero-4-shop-760.jpg',
+    imageAlt: 'Boutique shop fit-out by Keme Interior Design',
+    badge: 'Featured', time: '3 – 6 weeks', unit: 'Turnkey retail fit-out',
+    summary: 'Display-led retail interiors with counters, shelving, lighting and premium finishes.',
+    features: ['Display rails', 'Feature counter', 'Accent lighting'], materials: ['Fluted panel', 'Glass', 'MDF'],
+    position: 4, active: true, featured: true, featuredPosition: 4
+  },
+  {
+    id: 'd05', code: 'd05', title: 'Aluminium Windows & Partitions',
+    category: 'Aluminium Works', image: 'assets/img/hero-5-aluminum.jpg',
+    image480: 'assets/img/sm/hero-5-aluminum-480.jpg', image760: 'assets/img/sm/hero-5-aluminum-760.jpg',
+    imageAlt: 'Aluminium windows and glass partitions by Keme Interior Design',
+    badge: 'Featured', time: '5 – 10 days', unit: 'Measured fabrication and installation',
+    summary: 'Square, neatly sealed aluminium frames fabricated from precise site measurements.',
+    features: ['Sliding windows', 'Glass partitions', 'Quality locking gear'], materials: ['Aluminium', 'Glass', 'Hardware'],
+    position: 5, active: true, featured: true, featuredPosition: 5
+  },
+  {
+    id: 'd06', code: 'd06', title: 'Classic L-Shape Kitchen',
+    category: 'Kitchen Cabinets', image: 'assets/img/d-kitchen-lshape.jpg',
+    image480: 'assets/img/sm/d-kitchen-lshape-480.jpg', image760: 'assets/img/sm/d-kitchen-lshape-760.jpg',
+    imageAlt: 'Classic L-shape kitchen installation by Keme Interior Design',
+    badge: 'Kitchens', time: '2 – 4 weeks', unit: 'Full kitchen fit-out',
+    summary: 'A practical L-shape kitchen with durable boards, easy-clean doors and smart storage.',
+    features: ['Corner storage', 'Appliance housing', 'Soft-close drawers'], materials: ['MDF', 'Laminate', 'Quartz'],
+    position: 6, active: true, featured: false, featuredPosition: 0
+  },
+  {
+    id: 'd07', code: 'd07', title: 'U-Shape Family Kitchen',
+    category: 'Kitchen Cabinets', image: 'assets/img/d-kitchen-ushape.jpg',
+    image480: 'assets/img/sm/d-kitchen-ushape-480.jpg', image760: 'assets/img/sm/d-kitchen-ushape-760.jpg',
+    imageAlt: 'U-shape family kitchen by Keme Interior Design',
+    badge: 'Kitchens', time: '2 – 4 weeks', unit: 'Full kitchen fit-out',
+    summary: 'Three runs of storage and worktop designed around a busy family kitchen.',
+    features: ['Tall pantry', 'Worktop lighting', 'Integrated bin'], materials: ['MDF', 'Quartz', 'Hardware'],
+    position: 7, active: true, featured: false, featuredPosition: 0
+  },
+  {
+    id: 'd08', code: 'd08', title: 'White Gloss Kitchen',
+    category: 'Kitchen Cabinets', image: 'assets/img/d-kitchen-white-gloss.jpg',
+    image480: 'assets/img/sm/d-kitchen-white-gloss-480.jpg', image760: 'assets/img/sm/d-kitchen-white-gloss-760.jpg',
+    imageAlt: 'White gloss kitchen cabinetry by Keme Interior Design',
+    badge: 'Kitchens', time: '2 – 4 weeks', unit: 'Full kitchen fit-out',
+    summary: 'Bright acrylic-gloss doors paired with a durable worktop and neat internal fittings.',
+    features: ['Acrylic gloss doors', 'Corner carousel', 'Under-cabinet lighting'], materials: ['Acrylic', 'Quartz', 'LED'],
+    position: 8, active: true, featured: false, featuredPosition: 0
+  },
+  {
+    id: 'd09', code: 'd09', title: 'Walk-In Closet',
+    category: 'Wardrobes', image: 'assets/img/d-walkin-closet.jpg',
+    image480: 'assets/img/sm/d-walkin-closet-480.jpg', image760: 'assets/img/sm/d-walkin-closet-760.jpg',
+    imageAlt: 'Walk-in closet by Keme Interior Design',
+    badge: 'Wardrobes', time: '7 – 14 days', unit: 'Walk-in wardrobe',
+    summary: 'A hotel-inspired dressing space with open hanging, drawers and display shelving.',
+    features: ['Long-hang zones', 'Jewellery drawers', 'Display shelves'], materials: ['Melamine', 'LED', 'Hardware'],
+    position: 9, active: true, featured: false, featuredPosition: 0
+  },
+  {
+    id: 'd10', code: 'd10', title: 'Sliding Mirror Wardrobe',
+    category: 'Wardrobes', image: 'assets/img/d-wardrobe-sliding.jpg',
+    image480: 'assets/img/sm/d-wardrobe-sliding-480.jpg', image760: 'assets/img/sm/d-wardrobe-sliding-760.jpg',
+    imageAlt: 'Sliding mirror wardrobe by Keme Interior Design',
+    badge: 'Wardrobes', time: '7 – 14 days', unit: 'Sliding wardrobe',
+    summary: 'Space-saving sliding doors with full-length mirrors and a calm, tailored finish.',
+    features: ['Mirror doors', 'Soft-close rails', 'Shoe storage'], materials: ['Mirror', 'Melamine', 'Hardware'],
+    position: 10, active: true, featured: false, featuredPosition: 0
+  },
+  {
+    id: 'd11', code: 'd11', title: 'Interior Painting Refresh',
+    category: 'Interior Painting', image: 'assets/img/service-interior-painting.jpg',
+    image480: 'assets/img/sm/service-interior-painting-480.jpg', image760: 'assets/img/sm/service-interior-painting-760.jpg',
+    imageAlt: 'Interior painting and finish refresh by Keme Interior Design',
+    badge: 'New service', time: '1 – 4 days', unit: 'Interior walls and finishes',
+    summary: 'Careful surface preparation, clean masking and an even, durable interior paint finish.',
+    features: ['Surface preparation', 'Clean masking', 'Even finish'], materials: ['Primer', 'Interior paint', 'Fillers'],
+    position: 11, active: true, featured: false, featuredPosition: 0
+  }
+];
 
 /* ------------------------------------------------------------- MATERIAL SUPPLY */
 const MATERIALS = [
@@ -132,13 +239,12 @@ const MATERIALS = [
   }
 ];
 
-/* --------------------------------------------------------- SERVICES (6 CORE)
+/* --------------------------------------------------------- SERVICES (7 CORE)
    Each service carries two layers of copy:
      text   → the short card used on the home page and in grids
      body   → the long paragraph used by the service block on services.html
    `eyebrow`, `meta`, `bullets`, `imageAlt`, `ctaLabel`, `linkLabel` and
-   `linkHref` drive the services.html block, so the whole page (image + every
-   line of text under it) can be edited from the admin overlay.              */
+   `linkHref` drive the service cards and long-form blocks.                  */
 const SERVICES = [
   {
     slug: 'kitchen-cabinets',
@@ -276,7 +382,7 @@ const SERVICES = [
     title: 'All Fittings Work',
     icon: 'wrench',
     image: '',
-    imageAlt: 'Cabinet hardware, hinges and handles supplied by Redefine Interiors in Kenya',
+    imageAlt: 'Cabinet hardware, hinges and handles supplied by Keme Interior Design in Kenya',
     text: 'Doors, locks, handles, hinges, sinks, taps, sanitary ware, lighting and finishing — supplied and installed.',
     eyebrow: '06 · Finishing',
     blockTitle: 'All fittings work',
@@ -295,6 +401,34 @@ const SERVICES = [
     ctaLabel: 'Request fittings quotation',
     linkLabel: 'Hardware & fittings',
     linkHref: 'materials.html'
+  },
+  {
+    slug: 'interior-painting',
+    category: 'Interior Painting',
+    title: 'Interior Painting',
+    icon: 'palette',
+    image: 'assets/img/service-interior-painting.jpg',
+    image480: 'assets/img/sm/service-interior-painting-480.jpg',
+    image760: 'assets/img/sm/service-interior-painting-760.jpg',
+    imageAlt: 'Professional interior painting by Keme Interior Design in a modern Kenyan living room',
+    text: 'Crisp, durable interior painting — careful preparation, clean masking, premium finishes and a flawless final coat.',
+    eyebrow: '07 · Finishes',
+    blockTitle: 'Interior painting',
+    body: 'A beautiful interior deserves a finish to match. We prepare walls properly, fill and sand imperfections, protect floors and fittings, then apply primer and premium interior paint for an even, lasting result. Choose calm neutrals, rich feature walls or a complete colour refresh — we help you select the right finish for every room.',
+    meta: [
+      { k: 'Preparation', v: 'Fill · sand · prime' },
+      { k: 'Clean work', v: 'Fully masked' },
+      { k: '1 – 4 days', v: 'Typical delivery' }
+    ],
+    bullets: [
+      'Wall assessment, crack filling and surface sanding',
+      'Primer and premium washable interior paint systems',
+      'Feature walls, ceilings, trims and touch-up finishes',
+      'Careful masking, floor protection and daily clean-up'
+    ],
+    ctaLabel: 'Request painting quotation',
+    linkLabel: 'Ask about paint finishes',
+    linkHref: 'contact.html'
   }
 ];
 
@@ -303,7 +437,7 @@ const SERVICES = [
    Thika and Naivasha, with a few projects further afield.
    --------------------------------------------------------------------------- */
 const REVIEWS = [
-  {"name":"Grace Wanjiru","location":"Kilimani, Nairobi","rating":5,"service":"Kitchen Cabinets","date":"Aug 2026","text":"They installed our kitchen cabinets and the finish is flawless. The team worked around our family schedule and cleaned up before leaving every evening."},
+  {"name":"Grace Wanjiru","location":"Kilimani, Nairobi","rating":5,"service":"Kitchen Cabinets","date":"Aug 2026","text":"Keme Interior Design installed our kitchen cabinets and the finish is flawless. The team worked around our family schedule and cleaned up before leaving every evening."},
   {"name":"Brian Otieno","location":"Lavington, Nairobi","rating":5,"service":"Wardrobes","date":"Aug 2026","text":"Four-door sliding wardrobe delivered in nine days. The mirrors and soft-close doors are top quality for the price we paid."},
   {"name":"Mercy Achieng","location":"Westlands, Nairobi","rating":5,"service":"Gypsum Works","date":"Jul 2026","text":"The gypsum ceiling with cove lighting completely changed our sitting room. Tidy workmanship and no dust left behind."},
   {"name":"Peter Kamau","location":"Karen, Nairobi","rating":5,"service":"Shop Renovation","date":"Jul 2026","text":"They renovated our shop in Karen in three weeks — shelving, counter, ceiling and lighting. Sales went up the very month we reopened."},
@@ -318,7 +452,7 @@ const REVIEWS = [
   {"name":"Sharon Chebet","location":"Embakasi, Nairobi","rating":5,"service":"Shop Renovation","date":"Apr 2026","text":"Our salon in Embakasi looks like a completely different space now. Clients keep asking who did the work."},
   {"name":"Anthony Njoroge","location":"Roysambu, Nairobi","rating":5,"service":"Wardrobes","date":"Mar 2026","text":"Walk-in closet that genuinely looks like a hotel. The finishing quality is exceptional and the team handled everything. I highly recommend them."},
   {"name":"Vivian Mueni","location":"Kasarani, Nairobi","rating":5,"service":"Kitchen Cabinets","date":"Mar 2026","text":"They redid the kitchen another fundi had messed up. Proof that experience really matters — everything lines up perfectly now."},
-  {"name":"Stephen Kariuki","location":"Githurai 45, Nairobi","rating":4,"service":"Gypsum Works","date":"Mar 2026","text":"Ceiling and cornice done well, and the materials were supplied the same day. Only the paint touch-ups delayed us slightly."},
+  {"name":"Stephen Kariuki","location":"Githurai 45, Nairobi","rating":5,"service":"Interior Painting","date":"Mar 2026","text":"Keme Interior Design painted our sitting room and bedrooms after the gypsum ceiling. Clean lines, careful masking and a beautiful even finish."},
   {"name":"Halima Yusuf","location":"Zimmerman, Nairobi","rating":5,"service":"Materials Supply","date":"Feb 2026","text":"Kitchen accessories, pull-out baskets and soft-close runners. Genuine items — no fake hardware like other shops sell."},
   {"name":"Moses Barasa","location":"Kahawa West, Nairobi","rating":5,"service":"Shop Renovation","date":"Feb 2026","text":"Mini shop fit-out with shelving and a counter. Finished in twelve days exactly as promised."},
   {"name":"Ruth Wairimu","location":"Lang’ata, Nairobi","rating":5,"service":"Aluminium Works","date":"Jan 2026","text":"Aluminium and glass partition for our home office. The light and sound are perfect now, and it was up in four days."},
@@ -371,16 +505,15 @@ const FAQS = [
   { q: 'How do site visits and measurements work?', a: 'Our technician visits your site, measures precisely and checks the space before we quote. Within Nairobi and the surrounding areas such as Ruiru, Juja, Ngong and Kiambu visits are arranged at short notice. For Nakuru, Naivasha, Thika and other counties we charge a small transport fee that is deducted from your project once you award us the work.' },
   { q: 'How long does a project take?', a: 'Wardrobes normally take 7–14 days, kitchens 2–4 weeks, gypsum ceilings 3–9 days and full shop renovations 3–6 weeks from the day materials are approved. We agree the timeline in writing before starting.' },
   { q: 'How do payments work?', a: 'We work on a clear milestone basis: a deposit to buy materials and start fabrication, then progressive payments as agreed in your contract. Every payment is receipted and itemised.' },
-  { q: 'Do you serve areas outside Nairobi?', a: 'Yes — we serve all parts of Kenya. We regularly complete projects in Nakuru, Naivasha, Ngong, Juja, Ruiru, Thika, Machakos, Kajiado, Eldoret and Mombasa. Distance affects transport cost only, never the quality.' }
+  { q: 'Do you serve areas outside Nairobi?', a: 'Yes — we serve all parts of Kenya. We regularly complete projects in Nakuru, Naivasha, Ngong, Juja, Ruiru, Thika, Machakos, Kajiado, Eldoret and Mombasa. Distance affects transport cost only, never the quality.' },
+  { q: 'Do you offer interior painting?', a: 'Yes. Keme Interior Design prepares, primes and paints interior walls, ceilings and trims, including feature walls and full colour refreshes. Send room sizes or photos on WhatsApp and we will advise on finishes and quote the work.' }
 ];
 
 /* --------------------------------------------------------- NAV / PAGE HELPERS */
 
 /* ------------------------------------------------------ CATEGORIES (FILTERS)
-   The chips above the Designs, Materials and Services grids. They live in the
-   `categories` table in Supabase and are fully editable from the admin bar →
-   "Categories" (add · rename · reorder · hide · delete). This object is the
-   built-in fallback used before the database answers, and the shape is:
+   The chips above the Designs, Materials and Services grids. This standalone
+   site uses the built-in lists below; the shape is:
    { design: [], material: [], service: [] }.
    `hidden: true` keeps a category out of the visitor-facing filter bar.      */
 const CATEGORIES = {
@@ -390,7 +523,8 @@ const CATEGORIES = {
     { name: 'Aluminium Works' },
     { name: 'Gypsum Works' },
     { name: 'Shop Renovation' },
-    { name: 'Fittings' }
+    { name: 'Fittings' },
+    { name: 'Interior Painting' }
   ],
   material: [
     { name: 'Boards & Panels' },
@@ -407,7 +541,8 @@ const CATEGORIES = {
     { name: 'Aluminium Works' },
     { name: 'Gypsum Works' },
     { name: 'Shop Renovation' },
-    { name: 'Fittings' }
+    { name: 'Fittings' },
+    { name: 'Interior Painting' }
   ]
 };
 
